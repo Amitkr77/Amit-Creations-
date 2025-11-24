@@ -32,7 +32,7 @@ import FeatureGrid from "./components/FeatureGrid";
 import ContactPanel from "./components/ContactPanel";
 import ParticleBackground from "./components/ParticleBackground";
 import KeyboardEasterEggs from "./components/KeyboardEasterEggs";
-import ProjectSection from "./components/projectSection";
+import ProjectSection from "./components/ProjectSection";
 
 /* ========================================
    LIVE SECTION COMPONENT

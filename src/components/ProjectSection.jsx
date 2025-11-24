@@ -17,7 +17,7 @@ export default function ProjectSection() {
     liveUrl: "https://eco-twist-site.vercel.app/",
     githubUrl: "https://github.com/Amitkr77/EcoTwist_site",
     gradient: "from-emerald-500 to-teal-600",
-    image: "/project/ecotwist.png",               // <-- NEW
+    image: "/project/ecotwist.png",               
     challenge:
       "Build a scalable e-commerce platform that serves both individual eco-conscious buyers and businesses with bulk ordering, while tracking real environmental impact.",
     solution: [
@@ -45,7 +45,7 @@ export default function ProjectSection() {
     liveUrl: "https://checkplot-property-nexus.vercel.app/",
     githubUrl: "https://github.com/Amitkr77/checkplots",
     gradient: "from-blue-500 to-indigo-600",
-    image: "/project/checkplots.png",             // <-- NEW
+    image: "/project/checkplots.png",             
     challenge:
       "Create a secure, scalable platform for property management that handles multi-user roles, real-time bookings, and data privacy for high-value transactions.",
     solution: [
@@ -64,14 +64,14 @@ export default function ProjectSection() {
     ],
   },
 
-  // 3. OmniAI (AstraAI)
+  // 3. OmniAI – Intelligent AI Agent
   {
-    title: "OmniAI (AstraAI) – Intelligent AI Agent",
+    title: "OmniAI  – Intelligent AI Agent",
     description:
       "AI agent powered by Gemini and OpenAI APIs for task automation, including email handling, web data fetching, image generation, and conversational AI.",
     tech: ["React", "Node.js", "Gemini API", "OpenAI", "Express", "Vercel"],
-    liveUrl: "#",
-    githubUrl: "https://github.com/Amitkr77/astraai",
+    liveUrl: "https://omni-ai-khaki.vercel.app/",
+    githubUrl: "https://github.com/Amitkr77/OmniAI.git",
     gradient: "from-purple-500 to-pink-600",
     image: "",                 // <-- NEW
     challenge:
@@ -101,7 +101,7 @@ export default function ProjectSection() {
     liveUrl: "https://neo-gym-omega.vercel.app/",
     githubUrl: "https://github.com/Amitkr77/neogym",
     gradient: "from-orange-500 to-red-600",
-    image: "/project/neogym.png",                 // <-- NEW
+    image: "/project/neogym.png",                 
     challenge:
       "Develop a fast, type-safe app for dual roles (admin/member) to handle progress tracking and statistics without compromising on UI accessibility or performance.",
     solution: [
@@ -129,7 +129,7 @@ export default function ProjectSection() {
     liveUrl: "https://alomonx.vercel.app/",
     githubUrl: "https://github.com/Amitkr77/alomonx",
     gradient: "from-gray-500 to-slate-700",
-    image: "/project/alomonx.png",                // <-- NEW
+    image: "/project/alomonx.png",
     challenge:
       "Design a professional, SEO-optimized portfolio that highlights diverse services like custom software and marketing strategies in a minimalist UI.",
     solution: [
@@ -157,7 +157,7 @@ export default function ProjectSection() {
     liveUrl: "https://paws-on-time.vercel.app/",
     githubUrl: "https://github.com/Amitkr77/paws-on-time",
     gradient: "from-pink-500 to-rose-600",
-    image: "/project/pawson.png",                 // <-- NEW
+    image: "/project/pawson.png",                 
     challenge:
       "Build an intuitive booking system for pet services that handles appointments, payments, and notifications for busy pet owners.",
     solution: [
@@ -213,7 +213,7 @@ export default function ProjectSection() {
     liveUrl: "https://hunger-food.vercel.app/",
     githubUrl: "https://github.com/Amitkr77/hunger-food",
     gradient: "from-red-500 to-orange-600",
-    image: "/project/hungerfood.png",             // <-- NEW
+    image: "/project/hungerfood.png",             
     challenge:
       "Build a smooth, scalable food delivery app with real-time order tracking, secure payments, and admin panel for restaurant management.",
     solution: [
@@ -238,10 +238,10 @@ export default function ProjectSection() {
     description:
       "Real-time weather app with 7-day forecasts, interactive rain charts, and global weather maps using live API data.",
     tech: ["React", "Chart.js", "OpenWeather API", "Tailwind", "Vite"],
-    liveUrl: "https://skyscy.vercel.app/",
-    githubUrl: "https://github.com/Amitkr77/skyscy",
+    liveUrl: "https://skysyncapp.netlify.app/",
+    githubUrl: "https://github.com/Amitkr77/SkySync.git",
     gradient: "from-cyan-500 to-blue-600",
-    image: "/project/skyscy.png",                 // <-- NEW
+    image: "/project/skyscy.png",                 
     challenge:
       "Deliver accurate, visually engaging weather data with interactive charts and global coverage while maintaining fast load times.",
     solution: [
@@ -267,7 +267,7 @@ export default function ProjectSection() {
       "Secure user authentication system with role-based access control (Admin, Manager, User) using JWT and MongoDB.",
     tech: ["MongoDB", "Express", "Node.js", "JWT", "bcrypt", "Postman"],
     liveUrl: "#",
-    githubUrl: "https://github.com/Amitkr77/authshield",
+    githubUrl: "https://github.com/Amitkr77/AuthShield.git",
     gradient: "from-violet-600 to-indigo-700",
     image: "",           
     challenge:

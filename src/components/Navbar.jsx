@@ -57,7 +57,8 @@ export default function Navbar({ dark }) {
 
           {/* Resume Download Button */}
           <a
-            href="https://drive.google.com/file/d/1yReYdGqcofK2wyal1L7b31stsPEX5eFR/view"
+            href="https://drive.google.com/file/d/10-2y9jhhBJlpUmMMKifPm54xkfKhDfN4/view?usp=drive_link"
+
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-lg border border-black/10 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-white dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/20 dark:bg-white/10 bg-white/70"

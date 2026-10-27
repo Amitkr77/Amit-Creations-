@@ -213,37 +213,6 @@ export const projects = [
     ]
   },
   {
-    name: "Digital Mandi",
-    accent: "#a3e635",
-    tagline: "Local Produce CRM",
-    description: "CRM connecting farmers and buyers in local vegetable markets (sabzi mandi), with features for selling produce, bulk buying, and farmer loans.",
-    tech: [
-      "Next.js",
-      "Node.js",
-      "MongoDB",
-      "Tailwind",
-      "JWT"
-    ],
-    liveUrl: "https://digital-mandi-two.vercel.app/",
-    githubUrl: "https://github.com/Amitkr77/digital-mandi",
-    image: "/project/digitalmandi.webp",
-    challenge: "Create a secure marketplace CRM that bridges farmers and buyers, including loan facilities and inventory management for perishable goods.",
-    solution: [
-      "Role-based access (farmer/buyer) with JWT auth",
-      "MongoDB for real-time produce listings and transactions",
-      "Bulk order system with dynamic pricing",
-      "Loan module with basic eligibility checks",
-      "Dashboard analytics for sales and market trends"
-    ],
-    results: [
-      "Connected 100+ farmers/buyers in demo",
-      "Reduced middlemen via direct P2P sales",
-      "Loan features streamlining access to credit",
-      "Perishable goods tracking to minimize waste",
-      "Responsive UI for field-based mobile use"
-    ]
-  },
-  {
     name: "Hunger Food",
     accent: "#f97316",
     tagline: "Food Ordering App",

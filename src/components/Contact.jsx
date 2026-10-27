@@ -5,7 +5,7 @@ import { site } from "../data/site";
 import Magnetic from "./ui/Magnetic";
 import { Reveal, SectionHeader, Serif } from "./ui/Reveal";
 
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
+const WEB3FORMS_KEY = import.meta.env.WEB3FORMS_KEY;
 const EMPTY = { name: "", email: "", message: "" };
 
 function validate(form) {

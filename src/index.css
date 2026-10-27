@@ -49,6 +49,40 @@
   }
 }
 
+/* Scrollbars: thin dark rail, thumb glows accent on hover.
+   The transparent border + padding-box clip insets the thumb on any background. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16) padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-width: 2px;
+  background: rgba(169, 155, 255, 0.75) padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox has no ::-webkit-scrollbar; the standard properties would override it in Chrome */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+}
+
 /* Custom cursor replaces the native one, except where a text caret is needed */
 html.custom-cursor,
 html.custom-cursor * {

@@ -13,20 +13,28 @@ import ProjectModal from "./ProjectModal";
 
 const featured = projects.filter((p) => p.featured);
 const archive = projects.filter((p) => !p.featured);
+// Modal paging follows the order projects appear on the page
+const ordered = [...featured, ...archive];
 
 export default function Work() {
   const [selected, setSelected] = useState(null);
   const trigger = useRef(null);
 
+  // shared: the featured card's screenshot morphs into the modal (only when clicked from that card)
   const open = useCallback((project, e) => {
     trigger.current = e?.currentTarget ?? null;
-    setSelected(project);
+    setSelected({ project, shared: !!e && !!project.featured });
     trackCaseStudy(project.name);
     clearProjectFocus(); // the modal covers the card, so pointerleave won't fire
   }, []);
 
   // The terminal can open a case study by name
   useEffect(() => on("project:open", (project) => open(project)), [open]);
+
+  const navigate = useCallback((project) => {
+    setSelected({ project, shared: false });
+    trackCaseStudy(project.name);
+  }, []);
 
   const close = useCallback(() => {
     setSelected(null);
@@ -75,7 +83,15 @@ export default function Work() {
 
       {createPortal(
         <AnimatePresence>
-          {selected && <ProjectModal project={selected} onClose={close} />}
+          {selected && (
+            <ProjectModal
+              project={selected.project}
+              projects={ordered}
+              sharedImage={selected.shared}
+              onNavigate={navigate}
+              onClose={close}
+            />
+          )}
         </AnimatePresence>,
         document.body
       )}

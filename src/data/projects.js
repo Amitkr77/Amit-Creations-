@@ -55,36 +55,22 @@ export const projects = [
   },
   {
     name: "CheckPlots",
-    context: "Built during internship at Givni Info-Tech",
+    context: "Frontend · internship at Givni Info-Tech",
     accent: "#60a5fa",
-    tagline: "Real Estate Property Hub",
-    description: "Role-based property listing and tracking system with secure booking flows and intuitive dashboards for agents, buyers, and admins.",
-    tech: [
-      "Next.js",
-      "Tailwind",
-      "Node.js",
-      "MongoDB",
-      "JWT",
-      "Stripe"
-    ],
+    tagline: "Property-Tracking App — Frontend",
+    description: "The frontend of CheckPlots, a property-tracking platform: the React and Tailwind CSS interfaces people use to browse and search properties, connected to the team's backend APIs.",
+    tech: ["React", "Tailwind CSS"],
     liveUrl: "https://checkplot-property-nexus.vercel.app/",
     githubUrl: "https://github.com/Amitkr77/checkplots",
     image: "/project/checkplots.webp",
     featured: true,
-    challenge: "Create a secure, scalable platform for property management that handles multi-user roles, real-time bookings, and data privacy for high-value transactions.",
+    challenge: "Turn the product's property-tracking features into a clean, responsive interface while working alongside a separate backend team.",
     solution: [
-      "Role-based authentication with JWT for agents/buyers/admins",
-      "MongoDB for dynamic property listings and user tracking",
-      "Integrated booking flows with Stripe for secure payments",
-      "Responsive dashboards with Tailwind for quick insights",
-      "Real-time notifications via WebSockets for updates"
-    ],
-    results: [
-      "Streamlined booking process reducing manual errors by 70%",
-      "Secure data handling compliant with basic privacy standards",
-      "User-friendly UI adopted by 20+ real estate agents",
-      "Scalable to 1000+ listings with minimal latency",
-      "Live demo with full CRUD operations for properties"
+      "Built the application's user interfaces in React",
+      "Styled responsive, mobile-first layouts with Tailwind CSS",
+      "Developed reusable frontend modules for property listings and search",
+      "Integrated the UI with the backend team's REST APIs",
+      "Worked with backend developers on testing and bug fixes"
     ]
   },
   {

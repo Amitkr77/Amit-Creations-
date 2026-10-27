@@ -5,7 +5,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default [
-  { ignores: ['dist'] },
+  { ignores: ['dist', '.vite'] },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
@@ -29,6 +29,9 @@ export default [
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
       'react/jsx-no-target-blank': 'off',
+      'react/prop-types': 'off',
+      // react-three-fiber JSX props
+      'react/no-unknown-property': ['error', { ignore: ['geometry', 'material', 'frustumCulled'] }],
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

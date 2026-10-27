@@ -1,73 +1,169 @@
-import { useEffect } from "react";
-import {
-  Rocket,
-  Sun,
-  Moon,
-  Github,
-  Linkedin,
-  Download,
-  Terminal,
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { nav, site } from "../data/site";
+import { lockScroll, unlockScroll } from "../lib/scroll";
+import { ease } from "../lib/motion";
 
-export default function Navbar({ dark }) {
-  // Sync dark mode with document root
+function useActiveSection(ids) {
+  const [active, setActive] = useState(null);
   useEffect(() => {
-    if (dark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [dark]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [ids]);
+  return active;
+}
+
+const sectionIds = nav.map((n) => n.id);
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const active = useActiveSection(sectionIds);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    lockScroll();
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      unlockScroll();
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black/5 dark:border-white/10 bg-white/60 dark:bg-black/40 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-black/40">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-        {/* Logo */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center w-9 font-mono text-lg px-1 bg-white">
-            <span className="font-extrabold">{">"}</span>
-            <span className="animate-pulse font-extrabold ml-1"> _</span>
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-40 transition-[background-color,border-color,backdrop-filter] duration-500 ${
+          scrolled || open
+            ? "border-b border-white/[0.06] bg-ink-950/70 backdrop-blur-xl"
+            : "border-b border-transparent"
+        }`}
+      >
+        <nav className="container-page flex h-16 items-center justify-between" aria-label="Primary">
+          <a href="#top" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
+            <span className="grid h-8 w-8 place-items-center rounded-full border border-white/15 font-mono text-[11px] tracking-wider text-white transition-colors group-hover:border-accent/60">
+              AK
+            </span>
+            <span className="text-sm font-medium tracking-tight text-white/90">{site.name}</span>
+          </a>
+
+          <div className="hidden items-center gap-1 md:flex">
+            {nav.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                aria-current={active === item.id ? "true" : undefined}
+                className={`relative rounded-full px-4 py-2 text-sm transition-colors ${
+                  active === item.id ? "text-white" : "text-white/55 hover:text-white"
+                }`}
+              >
+                {active === item.id && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full bg-white/[0.07]"
+                    transition={{ duration: 0.5, ease }}
+                  />
+                )}
+                <span className="relative">{item.label}</span>
+              </a>
+            ))}
           </div>
-          <span className="font-semibold tracking-tight text-slate-800 dark:text-slate-100">
-            DVLPR
-          </span>
-        </div>
 
-        {/* Actions: LinkedIn + GitHub + Resume */}
-        <div className="flex items-center gap-2">
-          {/* LinkedIn Button */}
-          <a
-            href="https://www.linkedin.com/in/amitkr77"
-            target="_blank"
-            rel="noreferrer"
-            className="sm:inline-flex hidden items-center gap-2 rounded-lg border border-black/10 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-white dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/20 dark:bg-white/10 bg-white/70"
+          <div className="flex items-center gap-2">
+            <a
+              href={site.resume}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden items-center gap-1.5 rounded-full border border-white/15 px-4 py-2 text-sm text-white transition-colors hover:border-white/40 sm:inline-flex"
+            >
+              Résumé
+              <ArrowUpRight size={14} />
+            </a>
+            <button
+              type="button"
+              onClick={() => setOpen((o) => !o)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+              className="relative grid h-10 w-10 place-items-center rounded-full border border-white/15 md:hidden"
+            >
+              <span
+                className={`absolute h-px w-4 bg-white transition-transform duration-300 ${
+                  open ? "rotate-45" : "-translate-y-[3px]"
+                }`}
+              />
+              <span
+                className={`absolute h-px w-4 bg-white transition-transform duration-300 ${
+                  open ? "-rotate-45" : "translate-y-[3px]"
+                }`}
+              />
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35 }}
+            className="fixed inset-0 z-30 flex flex-col bg-ink-950 px-4 pb-10 pt-24 md:hidden"
           >
-            <Linkedin size={16} />
-          </a>
-
-          {/* GitHub Button */}
-          <a
-            href="https://github.com/amitkr77"
-            target="_blank"
-            rel="noreferrer"
-            className="sm:inline-flex hidden items-center gap-2 rounded-lg border border-black/10 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-white dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/20 dark:bg-white/10 bg-white/70"
-          >
-            <Github size={16} />
-          </a>
-
-          {/* Resume Download Button */}
-          <a
-            href="https://drive.google.com/file/d/10-2y9jhhBJlpUmMMKifPm54xkfKhDfN4/view?usp=drive_link"
-
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg border border-black/10 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-white dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/20 dark:bg-white/10 bg-white/70"
-          >
-            <Download size={16} />
-            Resume
-          </a>
-        </div>
-      </nav>
-    </header>
+            <ul className="flex flex-col">
+              {nav.map((item, i) => (
+                <motion.li
+                  key={item.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease, delay: 0.05 + i * 0.05 }}
+                  className="border-b border-white/[0.08]"
+                >
+                  <a
+                    href={`#${item.id}`}
+                    onClick={() => setOpen(false)}
+                    className="flex items-baseline justify-between py-5 text-4xl font-medium tracking-[-0.03em]"
+                  >
+                    {item.label}
+                    <span className="font-mono text-xs text-white/40">0{i + 1}</span>
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
+            <div className="mt-auto flex flex-wrap gap-3 text-sm">
+              <a href={site.resume} target="_blank" rel="noreferrer" className="rounded-full border border-white/15 px-4 py-2">
+                Résumé ↗
+              </a>
+              <a href={site.github} target="_blank" rel="noreferrer" className="rounded-full border border-white/15 px-4 py-2">
+                GitHub ↗
+              </a>
+              <a href={site.linkedin} target="_blank" rel="noreferrer" className="rounded-full border border-white/15 px-4 py-2">
+                LinkedIn ↗
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

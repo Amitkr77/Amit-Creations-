@@ -6,7 +6,7 @@ export default function Stack() {
     <section id="stack" className="relative py-28 sm:py-40">
       <div className="container-page">
         <SectionHeader
-          index="03"
+          index="04"
           label="Stack"
           title={
             <>
@@ -15,7 +15,7 @@ export default function Stack() {
           }
         />
 
-        <div className="grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-5 lg:gap-x-8">
           {stack.map((group, i) => (
             <Reveal key={group.name} delay={i * 0.06}>
               <h3 className="label border-b border-white/[0.08] pb-4">{group.name}</h3>

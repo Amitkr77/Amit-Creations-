@@ -49,6 +49,22 @@
   }
 }
 
+/* Custom cursor replaces the native one, except where a text caret is needed */
+html.custom-cursor,
+html.custom-cursor * {
+  cursor: none !important;
+}
+
+/* Hover hints the cursor label already covers */
+html.custom-cursor .cursor-hide {
+  display: none;
+}
+
+html.custom-cursor input:not([type="range"]):not([type="checkbox"]),
+html.custom-cursor textarea {
+  cursor: text !important;
+}
+
 /* Film grain: a static SVG noise tile, cheap to composite. */
 .grain {
   position: fixed;

@@ -6,11 +6,15 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Work from "./components/work/Work";
 import About from "./components/About";
+import Experience from "./components/Experience";
 import Stack from "./components/Stack";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import KeyboardEasterEggs from "./components/KeyboardEasterEggs";
 import Terminal from "./components/terminal/Terminal";
+import StatsPanel from "./components/StatsPanel";
+import AchievementToast from "./components/AchievementToast";
+import Cursor from "./components/ui/Cursor";
 
 // Three.js loads in its own chunk so text paints first
 const Scene = lazy(() => import("./components/scene/Scene"));
@@ -70,6 +74,7 @@ export default function App() {
         <Hero />
         <Work />
         <About />
+        <Experience />
         <Stack />
         <Contact />
       </main>
@@ -79,6 +84,9 @@ export default function App() {
 
       <KeyboardEasterEggs sceneOn={sceneOn} onToggleScene={toggleScene} />
       <Terminal />
+      <StatsPanel />
+      <AchievementToast />
+      <Cursor />
       <div className="grain" aria-hidden="true" />
     </MotionConfig>
   );

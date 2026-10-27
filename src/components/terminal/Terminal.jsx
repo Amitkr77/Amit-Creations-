@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { unlock } from "../../lib/achievements";
 import { on } from "../../lib/bus";
 import { ease } from "../../lib/motion";
 import { lockScroll, unlockScroll } from "../../lib/scroll";
@@ -90,12 +91,17 @@ export default function Terminal() {
     if (!open) return;
     returnFocus.current = document.activeElement;
     lockScroll();
+    unlock("terminal");
     requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
     if (queued.current) {
       run(queued.current);
       queued.current = null;
     }
-    const onKey = (e) => e.key === "Escape" && close();
+    const onKey = (e) => {
+      if (e.key !== "Escape") return;
+      e.stopImmediatePropagation(); // don't also close panels the terminal just opened
+      close();
+    };
     window.addEventListener("keydown", onKey);
     return () => {
       window.removeEventListener("keydown", onKey);

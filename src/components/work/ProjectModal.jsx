@@ -50,7 +50,7 @@ export default function ProjectModal({ project, onClose }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="project-title"
-        initial={{ y: 40, opacity: 0 }}
+        initial={{ y: project.featured ? 0 : 40, opacity: project.featured ? 1 : 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 24, opacity: 0 }}
         transition={{ duration: 0.5, ease }}
@@ -71,13 +71,17 @@ export default function ProjectModal({ project, onClose }) {
         </div>
 
         {project.image && (
-          <div className="aspect-[16/9] w-full overflow-hidden border-b border-white/[0.08] bg-ink-800">
+          <motion.div
+            layoutId={`shot-${project.name}`}
+            transition={{ duration: 0.7, ease }}
+            className="aspect-[16/9] w-full overflow-hidden border-b border-white/[0.08] bg-ink-800"
+          >
             <img src={project.image} alt={`${project.name} screenshot`} className="h-full w-full object-cover object-top" />
-          </div>
+          </motion.div>
         )}
 
         <div className="px-5 pb-10 pt-8 sm:px-10">
-          <p className="label">Case study</p>
+          <p className="label">{project.context ? `Case study · ${project.context}` : "Case study"}</p>
           <h2 id="project-title" className="mt-3 text-3xl font-medium tracking-[-0.035em] sm:text-4xl">
             {project.name}
           </h2>

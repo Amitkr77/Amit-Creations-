@@ -54,19 +54,23 @@ export default function FeaturedProject({ project, index, onOpen }) {
           onPointerLeave={reset}
           style={{ rotateX: rx, rotateY: ry }}
           aria-label={`Open ${project.name} case study`}
+          data-cursor="View"
           className="group relative block aspect-[16/10] w-full overflow-hidden rounded-[20px] border border-white/[0.08] bg-ink-800"
         >
-          <img
-            src={project.image}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            width="1600"
-            height="1000"
-            className="h-full w-full object-cover object-top transition-transform duration-[1.2s] ease-out group-hover:scale-[1.035]"
-          />
+          {/* Shared with the modal's hero image: the screenshot grows into the case study */}
+          <motion.div layoutId={`shot-${project.name}`} className="h-full w-full overflow-hidden">
+            <img
+              src={project.image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              width="1600"
+              height="1000"
+              className="h-full w-full object-cover object-top transition-transform duration-[1.2s] ease-out group-hover:scale-[1.035]"
+            />
+          </motion.div>
           <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/50 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-40" />
-          <span className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-xs font-medium text-ink-950 opacity-0 backdrop-blur transition-all duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
+          <span className="cursor-hide absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-xs font-medium text-ink-950 opacity-0 backdrop-blur transition-all duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
             Case study <ArrowRight size={14} />
           </span>
         </motion.button>
@@ -74,7 +78,7 @@ export default function FeaturedProject({ project, index, onOpen }) {
 
       <div className={`lg:col-span-5 ${flip ? "lg:order-1" : ""}`}>
         <Reveal className="font-mono text-xs text-white/40">
-          {String(index + 1).padStart(2, "0")} / Featured
+          {String(index + 1).padStart(2, "0")} / {project.context ?? "Featured"}
         </Reveal>
         <Reveal as="h3" delay={0.05} className="mt-4 text-3xl font-medium tracking-[-0.035em] sm:text-4xl">
           {project.name}

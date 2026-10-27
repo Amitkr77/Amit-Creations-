@@ -66,6 +66,7 @@ uniform float uRelease;
 uniform vec2 uFocus;
 uniform float uFocusStrength;
 uniform float uTextShift;
+uniform float uNoise;
 
 attribute vec3 aTerrain;
 attribute vec3 aKnot;
@@ -120,7 +121,7 @@ void main() {
   // Organic drift, swelling mid-transition
   float swirl = max(sin(t * 3.14159), max(sin(gathered * 3.14159), sin(rel * 3.14159)));
   vec3 np = pos * 0.45 + vec3(uTime * 0.07);
-  pos += vec3(snoise(np), snoise(np + 17.3), snoise(np + 41.7)) * (0.04 + swirl * 0.55);
+  pos += vec3(snoise(np), snoise(np + 17.3), snoise(np + 41.7)) * (0.04 + swirl * 0.55) * uNoise;
 
   pos += normalize(pos + 1e-4) * uBurst * (0.6 + aRandom.y * 2.6);
 

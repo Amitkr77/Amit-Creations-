@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { unlock } from "../lib/achievements";
 import { emit } from "../lib/bus";
 
 const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
@@ -28,7 +29,7 @@ export default function KeyboardEasterEggs({ sceneOn, onToggleScene }) {
       if (KONAMI.every((k, i) => keys.current[i] === k)) {
         keys.current = [];
         emit("scene:burst");
-        show("Konami unlocked ✦");
+        unlock("konami");
         return;
       }
 

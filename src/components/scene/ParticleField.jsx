@@ -74,6 +74,7 @@ export default function ParticleField({ reduced }) {
           uFocus: { value: new THREE.Vector2(99, 99) },
           uFocusStrength: { value: 0 },
           uTextShift: { value: 0 },
+          uNoise: { value: 1 },
         },
       }),
     []
@@ -169,6 +170,14 @@ export default function ParticleField({ reduced }) {
   const state = useRef({ stage: readScrollStage(), spin: 0, tiltX: 0, tiltY: 0, mouse: 0, fade: 0, focus: 0 });
   const targetColor = useRef(new THREE.Color());
   const perf = useRef({ frames: 0, elapsed: 0, step: 0 });
+  const stats = useRef({ frames: 0, elapsed: 0 });
+
+  useEffect(() => {
+    const ctx = gl.getContext();
+    const ext = ctx.getExtension("WEBGL_debug_renderer_info");
+    sceneState.stats.renderer = String(ext ? ctx.getParameter(ext.UNMASKED_RENDERER_WEBGL) : ctx.getParameter(ctx.RENDERER));
+    sceneState.stats.particles = count;
+  }, [gl, count]);
 
   useFrame((_, rawDelta) => {
     const dt = Math.min(rawDelta, 0.05);
@@ -188,7 +197,7 @@ export default function ParticleField({ reduced }) {
     } else {
       s.stage += (target - s.stage) * (1 - Math.exp(-dt * 3.2));
       s.fade = Math.min(1, s.fade + dt * 0.8);
-      s.spin += dt * atStage(SPIN_SPEED, s.stage);
+      s.spin += dt * atStage(SPIN_SPEED, s.stage) * sceneState.tweak.speed;
     }
 
     // Intro timeline
@@ -234,7 +243,7 @@ export default function ParticleField({ reduced }) {
       u.uFocus.value.set((fx * viewport.width) / 2, (fy * viewport.height) / 2);
     }
     s.focus += ((focusEl && !reduced ? 1 : 0) - s.focus) * (1 - Math.exp(-dt * 3));
-    targetColor.current.set(sceneState.accent ?? DEFAULT_ACCENT);
+    targetColor.current.set(sceneState.accent ?? sceneState.tweak.accent ?? DEFAULT_ACCENT);
     if (reduced) u.uColorB.value.copy(targetColor.current);
     else u.uColorB.value.lerp(targetColor.current, 1 - Math.exp(-dt * 4));
 
@@ -268,6 +277,20 @@ export default function ParticleField({ reduced }) {
     u.uRelease.value = release;
     u.uFocusStrength.value = s.focus;
     u.uTextShift.value = -offsetX / mobileScale;
+    u.uSize.value = 20 * sceneState.tweak.size;
+    u.uNoise.value = sceneState.tweak.noise;
+
+    // Live stats for the "under the hood" panel
+    const st = stats.current;
+    st.frames++;
+    st.elapsed += rawDelta;
+    if (st.elapsed >= 0.5) {
+      sceneState.stats.fps = Math.round(st.frames / st.elapsed);
+      sceneState.stats.dpr = gl.getPixelRatio();
+      sceneState.stats.particles = geometry.drawRange.count === Infinity ? count : geometry.drawRange.count;
+      st.frames = 0;
+      st.elapsed = 0;
+    }
 
     // Adaptive quality: drop resolution, then particle count, on slow GPUs
     if (!reduced && perf.current.step < 2) {

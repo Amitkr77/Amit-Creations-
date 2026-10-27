@@ -2,6 +2,25 @@
 // Featured projects render as large case-study rows; the rest go in the archive list.
 export const projects = [
   {
+    name: "FUYL",
+    accent: "#5eead4",
+    tagline: "Shopify Storefront & Full-Stack App",
+    context: "Freelance · in progress",
+    inProgress: true,
+    description: "Storefront for FUYL, a daily-nutrition brand, built on Shopify — plus a separate full-stack application built from scratch with Next.js, Node.js, MongoDB and Redis.",
+    tech: ["Shopify", "Next.js", "Node.js", "MongoDB", "Redis"],
+    liveUrl: "https://fuyl.in/",
+    image: "/project/fuyl.webp",
+    featured: true,
+    challenge: "Deliver a polished, responsive storefront for a direct-to-consumer brand while building a separate custom application alongside it.",
+    solution: [
+      "Shopify storefront refined for responsive design, storefront functionality and user experience",
+      "Separate full-stack application built from scratch with Next.js and Node.js",
+      "MongoDB for application data, Redis for caching",
+      "Work spans frontend, backend and data integration",
+    ],
+  },
+  {
     name: "EcoTwist",
     accent: "#34d399",
     tagline: "Smart & Sustainable E-Commerce",
@@ -36,6 +55,7 @@ export const projects = [
   },
   {
     name: "CheckPlots",
+    context: "Built during internship at Givni Info-Tech",
     accent: "#60a5fa",
     tagline: "Real Estate Property Hub",
     description: "Role-based property listing and tracking system with secure booking flows and intuitive dashboards for agents, buyers, and admins.",
@@ -69,6 +89,7 @@ export const projects = [
   },
   {
     name: "OmniAI",
+    context: "Also known as AstraAI",
     accent: "#e879f9",
     tagline: "Intelligent AI Agent",
     description: "AI agent powered by Gemini and OpenAI APIs for task automation, including email handling, web data fetching, image generation, and conversational AI.",
@@ -97,6 +118,21 @@ export const projects = [
       "Modular design for easy extension to new providers",
       "Demonstrated in web solutions for productivity boosts"
     ]
+  },
+  {
+    name: "Jetour",
+    accent: "#38bdf8",
+    tagline: "Multi-role Backend System",
+    context: "Freelance",
+    description: "Multi-role backend for authentication, bookings and real-time tracking, with live location over Socket.io and Google Maps.",
+    tech: ["Node.js", "Express", "MongoDB", "Socket.io", "Google Maps", "Firebase FCM", "AWS"],
+    challenge: "Coordinate several user roles, bookings and live tracking in one backend that stays responsive in real time.",
+    solution: [
+      "Role-based authentication across user types",
+      "Booking flows with real-time tracking via Socket.io and Google Maps",
+      "Push notifications through Firebase Cloud Messaging",
+      "Deployed on AWS",
+    ],
   },
   {
     name: "NeoGym",
@@ -174,7 +210,6 @@ export const projects = [
     liveUrl: "https://paws-on-time.vercel.app/",
     githubUrl: "https://github.com/Amitkr77/paws-on-time",
     image: "/project/pawson.webp",
-    featured: true,
     challenge: "Build an intuitive booking system for pet services that handles appointments, payments, and notifications for busy pet owners.",
     solution: [
       "Next.js for dynamic booking calendars",
@@ -376,6 +411,7 @@ export const projects = [
   },
   {
     name: "Homeasy",
+    context: "Built at Homeasy Automation",
     accent: "#fbbf24",
     tagline: "IoT Home Automation Store",
     description: "E-commerce platform selling IoT-based home automation products including smart switches, sensors, and intelligent control systems.",

@@ -4,7 +4,8 @@ import { AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "../../data/projects";
 import { site } from "../../data/site";
-import { on } from "../../lib/bus";
+import { trackCaseStudy } from "../../lib/achievements";
+import { clearProjectFocus, on } from "../../lib/bus";
 import { Reveal, SectionHeader, Serif } from "../ui/Reveal";
 import FeaturedProject from "./FeaturedProject";
 import Archive from "./Archive";
@@ -20,6 +21,8 @@ export default function Work() {
   const open = useCallback((project, e) => {
     trigger.current = e?.currentTarget ?? null;
     setSelected(project);
+    trackCaseStudy(project.name);
+    clearProjectFocus(); // the modal covers the card, so pointerleave won't fire
   }, []);
 
   // The terminal can open a case study by name

@@ -20,6 +20,10 @@ export const sceneState = {
   shape: null, // stage index forced from the terminal
   shapeScrollY: 0, // scroll position when `shape` was set; scrolling away clears it
   introDone: false,
+  // Written by the scene, shown in the stats panel
+  stats: { fps: 0, particles: 0, dpr: 1, renderer: "" },
+  // Live tweaks from the stats panel
+  tweak: { size: 1, noise: 1, speed: 1, accent: null },
 };
 
 export function focusProject(project, el = null) {

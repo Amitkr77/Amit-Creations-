@@ -49,6 +49,7 @@ export default function Archive({ projects, onOpen }) {
               <button
                 type="button"
                 onClick={(e) => onOpen(p, e)}
+                data-cursor="Open"
                 className="text-left text-lg font-medium tracking-[-0.02em] text-white transition-transform duration-500 ease-out after:absolute after:inset-0 after:content-[''] group-hover:translate-x-1 sm:text-xl"
               >
                 {p.name}

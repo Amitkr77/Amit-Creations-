@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { projects } from "../data/projects";
+import { site } from "../data/site";
 import { ease } from "../lib/motion";
 import { useIntroDone } from "../lib/useIntroDone";
+import Magnetic from "./ui/Magnetic";
 import { Serif } from "./ui/Reveal";
 
 const headline = [
@@ -13,8 +15,8 @@ const headline = [
 ];
 
 const stats = [
-  { value: `${projects.length}`, label: "Projects shipped" },
-  { value: "1+", label: "Years building" },
+  { value: `${projects.filter((p) => !p.inProgress).length}`, label: "Projects shipped" },
+  { value: "2+", label: "Years building" },
   { value: "Full-stack", label: "React · Node · Python" },
 ];
 
@@ -36,7 +38,7 @@ export default function Hero() {
             <span className="absolute inset-0 animate-ping rounded-full bg-accent opacity-60 motion-reduce:hidden" />
             <span className="relative h-2 w-2 rounded-full bg-accent" />
           </span>
-          Full-stack engineer — currently building
+          Full-stack engineer · {site.location}
         </motion.p>
 
         <h1 className="mt-8 max-w-[15ch] text-[clamp(2.75rem,8.4vw,6.5rem)] font-medium leading-[0.95] tracking-[-0.045em] lg:max-w-[12ch]">
@@ -65,13 +67,15 @@ export default function Hero() {
         </motion.p>
 
         <motion.div {...fade(ready, 0.9)} className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
-          <a
-            href="#work"
-            className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-ink-950 transition-colors hover:bg-accent-soft"
-          >
-            View selected work
-            <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
-          </a>
+          <Magnetic>
+            <a
+              href="#work"
+              className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-ink-950 transition-colors hover:bg-accent-soft"
+            >
+              View selected work
+              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+            </a>
+          </Magnetic>
           <a href="#contact" className="link-underline text-sm text-white/80 hover:text-white">
             Get in touch
           </a>

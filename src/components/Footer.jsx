@@ -1,9 +1,19 @@
+import { useEffect, useRef } from "react";
 import { ArrowUp } from "lucide-react";
+import { unlock } from "../lib/achievements";
 import { site } from "../data/site";
 
 export default function Footer() {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => entry.isIntersecting && unlock("explorer"));
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <footer className="relative border-t border-white/[0.08]">
+    <footer ref={ref} className="relative border-t border-white/[0.08]">
       <div className="container-page flex flex-col gap-6 py-10 text-sm text-white/45 sm:flex-row sm:items-center sm:justify-between">
         <p>
           © {new Date().getFullYear()} {site.name}. Designed &amp; built by hand.

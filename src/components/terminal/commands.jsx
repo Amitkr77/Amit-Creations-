@@ -1,5 +1,6 @@
 import { projects } from "../../data/projects";
-import { nav, site, stack } from "../../data/site";
+import { education, experience, nav, site, stack } from "../../data/site";
+import { ACHIEVEMENTS, getUnlocked, unlock } from "../../lib/achievements";
 import { emit, sceneState } from "../../lib/bus";
 import { scrollToId } from "../../lib/scroll";
 import { Dim, Ext, Hl, Rows } from "./Output";
@@ -17,6 +18,7 @@ function findProject(query) {
 function setShape(index) {
   sceneState.shape = index;
   sceneState.shapeScrollY = window.scrollY;
+  unlock("shapeshifter");
   emit("scene:set", true);
   emit("scene:shape");
 }
@@ -40,11 +42,14 @@ export const commands = {
     run: () => (
       <div className="space-y-1">
         <p>
-          <Hl>{site.name}</Hl> — {site.role.toLowerCase()}.
+          <Hl>{site.name}</Hl> — {site.role.toLowerCase()}, {site.location}.
         </p>
         <p className="text-white/60">
           Ships production-grade web apps end to end: React &amp; Next.js frontends, Node &amp; Python
           backends, deployed to the cloud.
+        </p>
+        <p className="text-white/60">
+          Now: {experience[0].role} at ADRI · freelancing on FUYL. Type <Hl>experience</Hl> for more.
         </p>
       </div>
     ),
@@ -87,6 +92,54 @@ export const commands = {
       if (!sections.includes(id)) return `cd: ${to}: no such section — try \`ls sections\``;
       ctx.close();
       setTimeout(() => scrollToId(id), 200);
+    },
+  },
+
+  experience: {
+    about: "where I've worked",
+    run: () => (
+      <div className="space-y-3">
+        {experience.map((job) => (
+          <div key={job.role + job.org}>
+            <p>
+              <Hl>{job.role}</Hl> <Dim>@</Dim> {job.org}
+            </p>
+            <Dim>{job.period}</Dim>
+          </div>
+        ))}
+        <p className="pt-1 text-white/60">
+          {education.degree}, {education.school} <Dim>({education.period})</Dim>
+        </p>
+      </div>
+    ),
+  },
+
+  stats: {
+    about: "render stats + live shader controls",
+    run: () => {
+      emit("stats:toggle", true);
+      unlock("stats");
+      return "opened the stats panel →";
+    },
+  },
+
+  achievements: {
+    about: "what you've discovered",
+    run: () => {
+      const got = getUnlocked();
+      return (
+        <div className="space-y-0.5">
+          {ACHIEVEMENTS.map((a) => (
+            <p key={a.id} className={got.has(a.id) ? "text-white" : "text-white/40"}>
+              {got.has(a.id) ? <span className="text-emerald-400">✓</span> : "·"} {a.title}
+              {!got.has(a.id) && <span className="text-white/30"> — {a.hint}</span>}
+            </p>
+          ))}
+          <p className="pt-2 text-white/50">
+            {got.size}/{ACHIEVEMENTS.length} unlocked
+          </p>
+        </div>
+      );
     },
   },
 
@@ -150,6 +203,7 @@ export const commands = {
   sudo: {
     about: null, // hidden: try `sudo hire amit`
     run: (args, ctx) => {
+      unlock("sudo");
       if (args.join(" ").toLowerCase() === "hire amit") {
         setTimeout(() => {
           ctx.close();
@@ -178,6 +232,9 @@ export const commands = {
           rows={[
             ["user", site.name],
             ["role", site.role],
+            ["location", site.location],
+            ["now", "ADRI · freelance"],
+            ["edu", "MCA, Amity University"],
             ["projects", `${projects.length} shipped`],
             ["shell", "amit.sh 1.0"],
             ["renderer", "three.js · custom GLSL"],

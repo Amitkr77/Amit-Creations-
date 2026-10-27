@@ -1,3 +1,4 @@
+import GitHubActivity from "./GitHubActivity";
 import { Reveal, SectionHeader, Serif } from "./ui/Reveal";
 
 const principles = [
@@ -37,15 +38,10 @@ export default function About() {
               call is intentional.
             </Reveal>
             <Reveal as="p" delay={0.08} className="mt-6 max-w-xl leading-relaxed text-white/55">
-              Real-time dashboards, AI-powered tools, commerce flows for both shoppers and businesses —
-              I build systems that scale gracefully and stay a pleasure to use.
-            </Reveal>
-            <Reveal delay={0.12} className="mt-10 inline-flex items-center gap-3 rounded-full border border-white/10 px-4 py-2 font-mono text-xs text-white/60">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-60 motion-reduce:hidden" />
-                <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
-              </span>
-              Currently crafting something new
+              Today I&apos;m a Junior Project Officer at ADRI, supporting the Ayushman Bharat initiative
+              with Python and Next.js — and freelancing on FUYL&apos;s storefront and app. Before that I
+              spent over a year as a full-stack engineer at Homeasy Automation, where I cut application
+              load time by about 30%.
             </Reveal>
           </div>
 
@@ -66,6 +62,8 @@ export default function About() {
             ))}
           </ol>
         </div>
+
+        <GitHubActivity />
       </div>
     </section>
   );

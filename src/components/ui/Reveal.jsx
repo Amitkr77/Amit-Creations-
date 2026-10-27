@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ease } from "../../lib/motion";
+import Scramble from "./Scramble";
 
 export function Reveal({ as = "div", delay = 0, y = 28, className, children, ...rest }) {
   const Comp = motion[as];
@@ -21,9 +22,9 @@ export function SectionHeader({ index, label, title, aside }) {
   return (
     <div className="mb-14 sm:mb-20">
       <Reveal className="flex items-center gap-4">
-        <span className="label text-accent">{index}</span>
+        <Scramble text={index} className="label text-accent" duration={500} />
         <span className="h-px w-10 bg-white/15" />
-        <span className="label">{label}</span>
+        <Scramble text={label} className="label" />
       </Reveal>
       <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <Reveal

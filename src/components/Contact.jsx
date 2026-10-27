@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Check, Copy, Loader2 } from "lucide-react";
 import { site } from "../data/site";
+import Magnetic from "./ui/Magnetic";
 import { Reveal, SectionHeader, Serif } from "./ui/Reveal";
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
@@ -72,7 +73,7 @@ export default function Contact() {
     <section id="contact" className="relative py-28 sm:py-40">
       <div className="container-page">
         <SectionHeader
-          index="04"
+          index="05"
           label="Contact"
           title={
             <>
@@ -182,22 +183,24 @@ export default function Contact() {
               </Field>
 
               <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <button
-                  type="submit"
-                  disabled={status === "sending"}
-                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-ink-950 transition-colors hover:bg-accent-soft disabled:opacity-60"
-                >
-                  {status === "sending" ? (
-                    <>
-                      <Loader2 size={16} className="animate-spin" /> Sending…
-                    </>
-                  ) : (
-                    <>
-                      Send message
-                      <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
-                    </>
-                  )}
-                </button>
+                <Magnetic className="w-full sm:w-auto">
+                  <button
+                    type="submit"
+                    disabled={status === "sending"}
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-ink-950 transition-colors hover:bg-accent-soft disabled:opacity-60 sm:w-auto"
+                  >
+                    {status === "sending" ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin" /> Sending…
+                      </>
+                    ) : (
+                      <>
+                        Send message
+                        <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                      </>
+                    )}
+                  </button>
+                </Magnetic>
 
                 <div aria-live="polite" className="text-sm">
                   <AnimatePresence mode="wait">

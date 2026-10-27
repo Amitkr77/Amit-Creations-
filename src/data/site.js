@@ -6,8 +6,8 @@ export const site = {
   github: "https://github.com/Amitkr77",
   githubUser: "Amitkr77",
   linkedin: "https://www.linkedin.com/in/amitkr77",
-  resume:
-    "https://drive.google.com/file/d/10-2y9jhhBJlpUmMMKifPm54xkfKhDfN4/view?usp=drive_link",
+  // Served from /public so it ships with the site; replace the file to update it
+  resume: "/Amit_Kumar_Resume.pdf",
 };
 
 export const nav = [

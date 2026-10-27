@@ -40,8 +40,9 @@ export default function About() {
             <Reveal as="p" delay={0.08} className="mt-6 max-w-xl leading-relaxed text-white/55">
               Today I&apos;m a Junior Project Officer at ADRI, supporting the Ayushman Bharat initiative
               with Python and Next.js — and freelancing on FUYL&apos;s storefront and app. Before that I
-              spent over a year as a full-stack engineer at Homeasy Automation, where I cut application
-              load time by about 30%.
+              spent over a year as a full-stack engineer at Homeasy Automation, where I learned full-stack
+              development hands-on — designing APIs, wiring up databases and shipping production MERN apps
+              from first commit to deploy.
             </Reveal>
           </div>
 

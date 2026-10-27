@@ -5,7 +5,7 @@ import ParticleField from "./ParticleField";
 const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export default function Scene({ active = true, burstSignal = 0 }) {
+export default function Scene({ active = true }) {
   const [reduced] = useState(prefersReducedMotion);
   const [ready, setReady] = useState(false);
 
@@ -22,7 +22,7 @@ export default function Scene({ active = true, burstSignal = 0 }) {
         frameloop={!active ? "never" : reduced ? "demand" : "always"}
         onCreated={() => setReady(true)}
       >
-        <ParticleField reduced={reduced} burstSignal={burstSignal} />
+        <ParticleField reduced={reduced} />
       </Canvas>
     </div>
   );

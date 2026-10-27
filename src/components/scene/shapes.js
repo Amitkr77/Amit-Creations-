@@ -62,3 +62,46 @@ export function buildShapes(count) {
 
   return { sphere, terrain, knot, galaxy, random };
 }
+
+// Intro formation: rasterise text on a hidden canvas and scatter particles over its pixels.
+// `width` is the world-space width the text block should span.
+export function sampleText(count, lines, width) {
+  const fontSize = 220;
+  const lineHeight = fontSize * 1.02;
+  const font = `600 ${fontSize}px Geist, ui-sans-serif, system-ui, sans-serif`;
+
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  ctx.font = font;
+  ctx.letterSpacing = "-8px";
+  const textWidth = Math.max(...lines.map((l) => ctx.measureText(l).width));
+  canvas.width = Math.ceil(textWidth + 40);
+  canvas.height = Math.ceil(lineHeight * lines.length + 40);
+
+  ctx.font = font;
+  ctx.letterSpacing = "-8px";
+  ctx.fillStyle = "#fff";
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  lines.forEach((line, i) => ctx.fillText(line, canvas.width / 2, 20 + lineHeight * (i + 0.5)));
+
+  const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const filled = [];
+  const step = 2;
+  for (let y = 0; y < canvas.height; y += step) {
+    for (let x = 0; x < canvas.width; x += step) {
+      if (data[(y * canvas.width + x) * 4 + 3] > 128) filled.push(x, y);
+    }
+  }
+
+  const out = new Float32Array(count * 3);
+  if (!filled.length) return out;
+  const scale = width / canvas.width;
+  for (let i = 0; i < count; i++) {
+    const j = Math.floor(Math.random() * (filled.length / 2)) * 2;
+    out[i * 3] = (filled[j] - canvas.width / 2 + rand() * step) * scale;
+    out[i * 3 + 1] = -(filled[j + 1] - canvas.height / 2 + rand() * step) * scale;
+    out[i * 3 + 2] = rand() * 0.12;
+  }
+  return out;
+}

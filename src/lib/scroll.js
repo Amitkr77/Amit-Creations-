@@ -3,6 +3,7 @@ import "lenis/dist/lenis.css";
 
 let lenis = null;
 let locks = 0;
+let pending = null;
 
 // Smooth scrolling for the whole page; skipped entirely for reduced-motion users.
 export function initSmoothScroll() {
@@ -36,8 +37,13 @@ export function initSmoothScroll() {
 export function scrollToId(id) {
   const target = id === "top" ? 0 : document.getElementById(id);
   if (target === null) return;
-  // force: the mobile menu may still hold the scroll lock while this click resolves
-  if (lenis) lenis.scrollTo(target, { duration: 1.4, force: true });
+  // A menu or terminal closing in the same tick still holds the lock, and lenis.start()
+  // resets any in-flight scroll — so defer until the lock is released.
+  if (locks > 0) {
+    pending = id;
+    return;
+  }
+  if (lenis) lenis.scrollTo(target, { duration: 1.4 });
   else if (target === 0) window.scrollTo({ top: 0 });
   else target.scrollIntoView();
 }
@@ -54,4 +60,9 @@ export function unlockScroll() {
   locks = 0;
   lenis?.start();
   document.documentElement.style.overflow = "";
+  if (pending) {
+    const id = pending;
+    pending = null;
+    scrollToId(id);
+  }
 }

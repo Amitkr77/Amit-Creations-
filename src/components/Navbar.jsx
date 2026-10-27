@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { nav, site } from "../data/site";
+import { emit } from "../lib/bus";
 import { lockScroll, unlockScroll } from "../lib/scroll";
 import { ease } from "../lib/motion";
 
@@ -24,6 +25,7 @@ function useActiveSection(ids) {
 }
 
 const sectionIds = nav.map((n) => n.id);
+const shortcut = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘K" : "Ctrl K";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -88,6 +90,15 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => emit("terminal:open")}
+              aria-label="Open terminal"
+              className="hidden items-center gap-2 rounded-full border border-white/15 py-2 pl-3 pr-2 font-mono text-xs text-white/70 transition-colors hover:border-white/40 hover:text-white md:inline-flex"
+            >
+              <span aria-hidden="true">&gt;_</span>
+              <kbd className="rounded border border-white/15 px-1.5 py-0.5 text-[10px] text-white/50">{shortcut}</kbd>
+            </button>
             <a
               href={site.resume}
               target="_blank"
@@ -150,6 +161,19 @@ export default function Navbar() {
                 </motion.li>
               ))}
             </ul>
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                emit("terminal:open");
+              }}
+              className="mt-8 flex items-center justify-between rounded-2xl border border-white/10 px-5 py-4 text-left font-mono text-sm text-white/70"
+            >
+              <span>
+                <span className="text-accent">&gt;_</span> open terminal
+              </span>
+              <span className="text-white/40">try it</span>
+            </button>
             <div className="mt-auto flex flex-wrap gap-3 text-sm">
               <a href={site.resume} target="_blank" rel="noreferrer" className="rounded-full border border-white/15 px-4 py-2">
                 Résumé ↗

@@ -1,11 +1,17 @@
+import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { clearProjectFocus, focusProject } from "../../lib/bus";
 import { ease } from "../../lib/motion";
 import { Reveal } from "../ui/Reveal";
 import ProjectLinks from "./ProjectLinks";
 
 export default function FeaturedProject({ project, index, onOpen }) {
   const flip = index % 2 === 1;
+  const shot = useRef(null);
+
+  // The particle field gathers around the screenshot and takes on the project colour
+  const focus = () => focusProject(project, shot.current);
 
   // Subtle pointer-driven tilt on the screenshot
   const px = useMotionValue(0);
@@ -25,7 +31,13 @@ export default function FeaturedProject({ project, index, onOpen }) {
   };
 
   return (
-    <article className="grid items-center gap-8 lg:grid-cols-12 lg:gap-14">
+    <article
+      className="grid items-center gap-8 lg:grid-cols-12 lg:gap-14"
+      onPointerEnter={(e) => e.pointerType === "mouse" && focus()}
+      onPointerLeave={clearProjectFocus}
+      onFocus={focus}
+      onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && clearProjectFocus()}
+    >
       <motion.div
         initial={{ opacity: 0, y: 48, clipPath: "inset(12% 6% 12% 6% round 20px)" }}
         whileInView={{ opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0% round 20px)" }}
@@ -35,6 +47,7 @@ export default function FeaturedProject({ project, index, onOpen }) {
         style={{ perspective: 1200 }}
       >
         <motion.button
+          ref={shot}
           type="button"
           onClick={(e) => onOpen(project, e)}
           onPointerMove={onMove}

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { projects } from "../data/projects";
 import { ease } from "../lib/motion";
+import { useIntroDone } from "../lib/useIntroDone";
 import { Serif } from "./ui/Reveal";
 
 const headline = [
@@ -17,17 +18,20 @@ const stats = [
   { value: "Full-stack", label: "React · Node · Python" },
 ];
 
-const fade = (delay) => ({
+// Content waits for the particle intro to release before revealing
+const fade = (ready, delay) => ({
   initial: { opacity: 0, y: 16 },
-  animate: { opacity: 1, y: 0 },
+  animate: ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
   transition: { duration: 1, ease, delay },
 });
 
 export default function Hero() {
+  const ready = useIntroDone();
+
   return (
     <section id="top" className="relative flex min-h-[100svh] flex-col pt-16">
       <div className="container-page flex flex-1 flex-col justify-center py-16 sm:py-24">
-        <motion.p {...fade(0.2)} className="flex items-center gap-3 font-mono text-xs text-white/60">
+        <motion.p {...fade(ready, 0.1)} className="flex items-center gap-3 font-mono text-xs text-white/60">
           <span className="relative flex h-2 w-2">
             <span className="absolute inset-0 animate-ping rounded-full bg-accent opacity-60 motion-reduce:hidden" />
             <span className="relative h-2 w-2 rounded-full bg-accent" />
@@ -41,8 +45,8 @@ export default function Hero() {
               <motion.span
                 className="block"
                 initial={{ y: "105%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 1.1, ease, delay: 0.35 + i * 0.09 }}
+                animate={{ y: ready ? 0 : "105%" }}
+                transition={{ duration: 1.1, ease, delay: 0.25 + i * 0.09 }}
               >
                 {line.map((part, j) => (
                   <span key={j}>
@@ -55,12 +59,12 @@ export default function Hero() {
           ))}
         </h1>
 
-        <motion.p {...fade(0.85)} className="mt-8 max-w-md text-base leading-relaxed text-white/60 sm:text-lg">
+        <motion.p {...fade(ready, 0.75)} className="mt-8 max-w-md text-base leading-relaxed text-white/60 sm:text-lg">
           I design and ship production-grade web apps — React and Next.js frontends, Node and Python
           backends, deployed to the cloud and built to scale.
         </motion.p>
 
-        <motion.div {...fade(1)} className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+        <motion.div {...fade(ready, 0.9)} className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
           <a
             href="#work"
             className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-ink-950 transition-colors hover:bg-accent-soft"
@@ -74,7 +78,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      <motion.div {...fade(1.2)} className="container-page pb-8">
+      <motion.div {...fade(ready, 1.1)} className="container-page pb-8">
         <div className="flex items-end justify-between gap-6 border-t border-white/[0.08] pt-6">
           <dl className="grid grid-cols-2 gap-x-10 gap-y-4 sm:flex sm:gap-14">
             {stats.map((s) => (

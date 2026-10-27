@@ -21,7 +21,7 @@ export default function Footer() {
         </div>
       </div>
       <p className="container-page hidden pb-6 font-mono text-[11px] text-white/25 sm:block">
-        Press <kbd className="text-white/45">?</kbd> for keyboard shortcuts
+        Press <kbd className="text-white/45">`</kbd> or <kbd className="text-white/45">?</kbd> to open the terminal
       </p>
     </footer>
   );

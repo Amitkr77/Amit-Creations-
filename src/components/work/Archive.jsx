@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Reveal } from "../ui/Reveal";
+import { clearProjectFocus, focusProject } from "../../lib/bus";
 import ProjectLinks from "./ProjectLinks";
 
 const canHover = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -22,14 +23,24 @@ export default function Archive({ projects, onOpen }) {
 
   return (
     <>
-      <ul className="border-t border-white/[0.08]" onPointerMove={onMove} onPointerLeave={() => setHovered(null)}>
+      <ul
+        className="border-t border-white/[0.08]"
+        onPointerMove={onMove}
+        onPointerLeave={() => {
+          setHovered(null);
+          clearProjectFocus();
+        }}
+      >
         {projects.map((p, i) => (
           <Reveal
             as="li"
             key={p.name}
             delay={Math.min(i, 5) * 0.04}
             y={16}
-            onPointerEnter={() => setHovered(p)}
+            onPointerEnter={() => {
+              setHovered(p);
+              focusProject(p);
+            }}
             className="group relative grid grid-cols-[2.25rem_1fr_auto] items-center gap-4 border-b border-white/[0.08] py-6 transition-colors duration-300 hover:bg-white/[0.02] md:grid-cols-[3rem_1.1fr_1fr_auto] md:gap-6"
           >
             <span className="font-mono text-xs text-white/35">{String(i + 1).padStart(2, "0")}</span>

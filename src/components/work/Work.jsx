@@ -1,9 +1,10 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "../../data/projects";
 import { site } from "../../data/site";
+import { on } from "../../lib/bus";
 import { Reveal, SectionHeader, Serif } from "../ui/Reveal";
 import FeaturedProject from "./FeaturedProject";
 import Archive from "./Archive";
@@ -20,6 +21,9 @@ export default function Work() {
     trigger.current = e?.currentTarget ?? null;
     setSelected(project);
   }, []);
+
+  // The terminal can open a case study by name
+  useEffect(() => on("project:open", (project) => open(project)), [open]);
 
   const close = useCallback(() => {
     setSelected(null);

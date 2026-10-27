@@ -61,10 +61,16 @@ uniform vec2 uMouse;
 uniform float uMouseStrength;
 uniform vec3 uColorA;
 uniform vec3 uColorB;
+uniform float uAssemble;
+uniform float uRelease;
+uniform vec2 uFocus;
+uniform float uFocusStrength;
+uniform float uTextShift;
 
 attribute vec3 aTerrain;
 attribute vec3 aKnot;
 attribute vec3 aGalaxy;
+attribute vec3 aText;
 attribute vec2 aRandom;
 
 varying vec3 vColor;
@@ -103,10 +109,18 @@ void main() {
   float t = smoothstep(delay, delay + 0.65, f);
   vec3 pos = mix(pick(seg, s0, s1, s2, s3), pick(seg + 1.0, s0, s1, s2, s3), t);
 
+  // Intro: scattered cloud -> name -> current stage formation
+  float gathered = smoothstep(aRandom.y * 0.4, aRandom.y * 0.4 + 0.6, uAssemble);
+  float rel = smoothstep(aRandom.x * 0.45, aRandom.x * 0.45 + 0.55, uRelease);
+  vec3 cloud = aGalaxy * 2.4 + vec3(0.0, 0.0, -3.0);
+  // uTextShift cancels the group offset so the name stays centred while the sphere sits right
+  vec3 text = aText + vec3(uTextShift, 0.0, 0.0);
+  pos = mix(mix(cloud + vec3(uTextShift, 0.0, 0.0), text, gathered), pos, rel);
+
   // Organic drift, swelling mid-transition
-  float swirl = sin(t * 3.14159);
+  float swirl = max(sin(t * 3.14159), max(sin(gathered * 3.14159), sin(rel * 3.14159)));
   vec3 np = pos * 0.45 + vec3(uTime * 0.07);
-  pos += vec3(snoise(np), snoise(np + 17.3), snoise(np + 41.7)) * (0.05 + swirl * 0.55);
+  pos += vec3(snoise(np), snoise(np + 17.3), snoise(np + 41.7)) * (0.04 + swirl * 0.55);
 
   pos += normalize(pos + 1e-4) * uBurst * (0.6 + aRandom.y * 2.6);
 
@@ -116,6 +130,11 @@ void main() {
   float push = (1.0 - smoothstep(0.0, 1.5, length(away))) * uMouseStrength;
   world.xy += normalize(away + 1e-5) * push * 0.55;
   world.z += push * 0.35;
+
+  // Gather loosely around the hovered project
+  vec2 toFocus = uFocus - world.xy;
+  float pull = uFocusStrength * (1.0 - smoothstep(0.0, 4.5, length(toFocus)));
+  world.xy += toFocus * pull * 0.3;
 
   vec4 mv = viewMatrix * world;
   gl_Position = projectionMatrix * mv;
@@ -129,7 +148,9 @@ void main() {
   float facing = 0.28 + 0.72 * smoothstep(9.4, 5.0, depth);
   float fade = facing * smoothstep(0.8, 2.8, depth) * (1.0 - smoothstep(10.0, 17.0, depth));
   vAlpha = (uOpacity * twinkle * (0.35 + aRandom.x * 0.65) + push * 0.35 * uOpacity) * fade;
-  vColor = mix(uColorA, uColorB, clamp(aRandom.y * 0.85 + push + swirl * 0.35, 0.0, 1.0));
+  // The name reads near-white; formations carry the accent
+  float tint = aRandom.y * 0.85 * mix(0.3, 1.0, rel) + push + pull * 2.0 + swirl * 0.35;
+  vColor = mix(uColorA, uColorB, clamp(tint, 0.0, 1.0));
 }
 `;
 

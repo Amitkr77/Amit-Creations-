@@ -1,6 +1,7 @@
 import { Component, lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { MotionConfig } from "framer-motion";
 import { initSmoothScroll } from "./lib/scroll";
+import { markIntroDone, on } from "./lib/bus";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Work from "./components/work/Work";
@@ -9,6 +10,7 @@ import Stack from "./components/Stack";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import KeyboardEasterEggs from "./components/KeyboardEasterEggs";
+import Terminal from "./components/terminal/Terminal";
 
 // Three.js loads in its own chunk so text paints first
 const Scene = lazy(() => import("./components/scene/Scene"));
@@ -19,6 +21,9 @@ class SceneBoundary extends Component {
   static getDerivedStateFromError() {
     return { failed: true };
   }
+  componentDidCatch() {
+    markIntroDone();
+  }
   render() {
     return this.state.failed ? null : this.props.children;
   }
@@ -26,12 +31,18 @@ class SceneBoundary extends Component {
 
 export default function App() {
   const [sceneOn, setSceneOn] = useState(true);
-  const [burst, setBurst] = useState(0);
 
   useEffect(() => initSmoothScroll(), []);
 
+  // The hero waits for the particle intro; never let a slow or missing scene hold it hostage
+  useEffect(() => {
+    const t = setTimeout(markIntroDone, 3500);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => on("scene:set", (value) => setSceneOn(value)), []);
+
   const toggleScene = useCallback(() => setSceneOn((v) => !v), []);
-  const triggerBurst = useCallback(() => setBurst((b) => b + 1), []);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -44,7 +55,7 @@ export default function App() {
 
       <SceneBoundary>
         <Suspense fallback={null}>
-          <Scene active={sceneOn} burstSignal={burst} />
+          <Scene active={sceneOn} />
         </Suspense>
       </SceneBoundary>
 
@@ -66,7 +77,8 @@ export default function App() {
         <Footer />
       </div>
 
-      <KeyboardEasterEggs sceneOn={sceneOn} onToggleScene={toggleScene} onKonami={triggerBurst} />
+      <KeyboardEasterEggs sceneOn={sceneOn} onToggleScene={toggleScene} />
+      <Terminal />
       <div className="grain" aria-hidden="true" />
     </MotionConfig>
   );

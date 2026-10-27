@@ -1,7 +1,9 @@
+// `accent` tints the particle field while the project is hovered.
 // Featured projects render as large case-study rows; the rest go in the archive list.
 export const projects = [
   {
     name: "EcoTwist",
+    accent: "#34d399",
     tagline: "Smart & Sustainable E-Commerce",
     description: "Full-stack e-commerce platform for eco-friendly smart devices. Supports B2C & B2B with bulk orders, analytics, and environmental impact tracking.",
     tech: [
@@ -34,6 +36,7 @@ export const projects = [
   },
   {
     name: "CheckPlots",
+    accent: "#60a5fa",
     tagline: "Real Estate Property Hub",
     description: "Role-based property listing and tracking system with secure booking flows and intuitive dashboards for agents, buyers, and admins.",
     tech: [
@@ -66,6 +69,7 @@ export const projects = [
   },
   {
     name: "OmniAI",
+    accent: "#e879f9",
     tagline: "Intelligent AI Agent",
     description: "AI agent powered by Gemini and OpenAI APIs for task automation, including email handling, web data fetching, image generation, and conversational AI.",
     tech: [
@@ -96,6 +100,7 @@ export const projects = [
   },
   {
     name: "NeoGym",
+    accent: "#fb923c",
     tagline: "Modern Gym Management System",
     description: "Role-based system for admins and members to manage gym activities, track progress, and monitor fitness goals with personalized dashboards.",
     tech: [
@@ -127,6 +132,7 @@ export const projects = [
   },
   {
     name: "Alomonx",
+    accent: "#94a3b8",
     tagline: "Tech Consultancy Portfolio",
     description: "Sleek portfolio site showcasing software solutions and digital marketing services for a tech consultancy firm.",
     tech: [
@@ -155,6 +161,7 @@ export const projects = [
   },
   {
     name: "Paws On Time",
+    accent: "#fb7185",
     tagline: "Complete Pet Care Platform",
     description: "Pet care service platform for scheduling grooming, vet visits, and boarding with easy booking and reminders.",
     tech: [
@@ -186,6 +193,7 @@ export const projects = [
   },
   {
     name: "Digital Mandi",
+    accent: "#a3e635",
     tagline: "Local Produce CRM",
     description: "CRM connecting farmers and buyers in local vegetable markets (sabzi mandi), with features for selling produce, bulk buying, and farmer loans.",
     tech: [
@@ -216,6 +224,7 @@ export const projects = [
   },
   {
     name: "Hunger Food",
+    accent: "#f97316",
     tagline: "Food Ordering App",
     description: "Full-stack MERN restaurant app enabling users to browse menus, add to cart, and place orders with real-time status updates.",
     tech: [
@@ -247,6 +256,7 @@ export const projects = [
   },
   {
     name: "SkyScyn",
+    accent: "#22d3ee",
     tagline: "Advanced Weather App",
     description: "Real-time weather app with 7-day forecasts, interactive rain charts, and global weather maps using live API data.",
     tech: [
@@ -277,6 +287,7 @@ export const projects = [
   },
   {
     name: "AuthShield",
+    accent: "#818cf8",
     tagline: "Role-Based Authentication",
     description: "Secure user authentication system with role-based access control (Admin, Manager, User) using JWT and MongoDB.",
     tech: [
@@ -306,6 +317,7 @@ export const projects = [
   },
   {
     name: "AloCodes",
+    accent: "#a78bfa",
     tagline: "Learn | Code | Placed",
     description: "Online learning platform offering multiple career-focused courses where students can learn, code, and get placement-ready under guidance of highly qualified instructors.",
     tech: [
@@ -334,6 +346,7 @@ export const projects = [
   },
   {
     name: "EVWheels",
+    accent: "#4ade80",
     tagline: "Electric Cycle E-Commerce",
     description: "E-commerce platform for selling electric cycles and related spare parts with a smooth shopping and checkout experience.",
     tech: [
@@ -363,6 +376,7 @@ export const projects = [
   },
   {
     name: "Homeasy",
+    accent: "#fbbf24",
     tagline: "IoT Home Automation Store",
     description: "E-commerce platform selling IoT-based home automation products including smart switches, sensors, and intelligent control systems.",
     tech: [
